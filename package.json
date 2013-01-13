@@ -1,0 +1,30 @@
+{
+  "name": "Integralist",
+  "version": "0.0.1",
+  "description": "A test project set-up to try out the latest (0.4.0) version of Grunt",
+  "main": "Gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.0rc2",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-uglify": "~0.1.0",
+    "grunt-contrib-requirejs": "~0.3.4",
+    "grunt-contrib-sass": "~0.2.1",
+    "grunt-contrib-imagemin": "~0.1.0",
+    "grunt-contrib-htmlmin": "~0.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Integralist/Grunt-Boilerplate.git"
+  },
+  "keywords": [
+    "Grunt",
+    "JavaScript"
+  ],
+  "author": "Mark McDonnell",
+  "license": "MIT"
+}
