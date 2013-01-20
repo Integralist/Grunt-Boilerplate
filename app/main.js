@@ -3,7 +3,7 @@ require.config({
         a: '../modules/a',
         b: '../modules/b',
         c: '../modules/c',
-        jquery: '../lib/jquery',
+        jquery: '../lib/jquery'
     }
 });
 

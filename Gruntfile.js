@@ -1,10 +1,10 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   /*
       Grunt set-up:
         npm install -g grunt-cli
-        npm install -g grunt-init
-        npm init (make sure there is an empty package.json file and a README.md file - you'll need to add "grunt": "~0.4.0" to `devDependencies` inside package.json)
+        npm install -g grunt-init (seems this isn't necessary if you already have a package.json file created)
+        npm init (same as above: make sure there is an empty package.json file and a README.md file - you'll need to add "grunt": "~0.4.0" to `devDependencies` inside package.json)
 
       Requirements: 
         (The following commands should be run on every project + the `--save-dev` flag updates the package.json file with the dependency name)
@@ -13,6 +13,7 @@ module.exports = function(grunt) {
             npm install grunt@devel --save-dev
         npm install grunt-contrib-watch --save-dev
         npm install grunt-contrib-jshint --save-dev
+            At time of testing I needed more up to date version of jshint: npm install https://github.com/gruntjs/grunt-contrib-jshint/archive/7fd70e86c5a8d489095fa81589d95dccb8eb3a46.tar.gz --save-dev
         npm install grunt-contrib-uglify --save-dev
         npm install grunt-contrib-requirejs --save-dev
         npm install grunt-contrib-sass --save-dev
@@ -26,17 +27,25 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    /*
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> | <%= pkg.version %> | <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> | <%= pkg.version %> | <%= grunt.template.today("yyyy-mm-dd") %> /\n'
       },
       dist: {
         src: './<%= pkg.name %>.js',
         dest: './<%= pkg.name %>.min.js'
       }
     },
+    */
 
     jshint: {
+      /*
+          Note:
+          In case there is a /release/ directory found, we don't want to lint that 
+          so we use the ! (bang) operator to ignore the specified directory
+       */
+      files: ['Gruntfile.js', 'app/**/*.js', '!app/release/**', 'modules/**/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -51,23 +60,19 @@ module.exports = function(grunt) {
         browser: true,
 
         globals: {
+          module: true,
           require: true,
           requirejs: true,
           jQuery: true,
           console: true,
           define: true
         }
-      },
-      /*
-          In case there is a /release/ directory found, we don't want to lint that 
-          so we use the ! (bang) operator to ignore the specified directory
-       */
-      all: ['Gruntfile.js', 'app/**/*.js', '!app/release/**']
+      }
     },
 
     // Run: `grunt watch` from command line for this section to take effect
     watch: {
-      files: '<%= jshint.uses_defaults %>',
+      files: '<%= jshint.files %>',
       tasks: 'jshint' // add space separated list of items to watch
     },
 
