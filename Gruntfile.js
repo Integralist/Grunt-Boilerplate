@@ -147,7 +147,7 @@ module.exports = function (grunt) {
           removeEmptyAttributes: true,
           removeCommentsFromCDATA: true,
           removeRedundantAttributes: true,
-          collapseBooleanAttributes: true,
+          collapseBooleanAttributes: true
         },
         files: {
           './index-min.html': './index.html'
