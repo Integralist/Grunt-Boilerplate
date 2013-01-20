@@ -72,8 +72,8 @@ module.exports = function (grunt) {
 
     // Run: `grunt watch` from command line for this section to take effect
     watch: {
-      files: '<%= jshint.files %>',
-      tasks: 'jshint' // add space separated list of items to watch
+      files: '<%= jshint.files %> <%= sass.dev.files %>',
+      tasks: 'default'
     },
 
     requirejs: {
@@ -94,6 +94,70 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+
+    sass: {
+      dist: {
+        options: {
+          style: 'compressed'
+        },
+        files: {
+          './app/styles/main.css': './app/styles/sass/main.scss'
+        }
+      },
+      dev: {
+        options: {
+          style: 'expanded'
+        },
+        files: {
+          './app/styles/main.css': './app/styles/sass/main.scss'
+        }
+      }
+    },
+
+    imagemin: {
+      dist: {
+        options: {
+          optimizationLevel: 7,
+          progressive: true
+        },
+        files: {
+          //'./app/images/': './app/images/**/*.jpg'
+          './app/images/test-min.jpg': './app/images/test.jpg',
+          './app/images/car-min.jpg': './app/images/car.jpg'
+        }
+      },
+      dev: {
+        options: {
+          optimizationLevel: 7
+        },
+        files: {
+          //'./app/images/': './app/images/**/*.jpg'
+          './app/images/test-min.jpg': './app/images/test.jpg',
+          './app/images/car-min.jpg': './app/images/car.jpg'
+        }
+      }
+    },
+
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeEmptyAttributes: true,
+          removeCommentsFromCDATA: true,
+          removeRedundantAttributes: true,
+          collapseBooleanAttributes: true,
+        },
+        files: {
+          './index-min.html': './index.html'
+        }
+      },
+      dev: {
+        files: {
+          './index-min.html': './index.html'
+        }
+      }
     }
 
   });
@@ -108,10 +172,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
   // Default Task
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'sass']);
 
   // Release Task
-  grunt.registerTask('release', ['requirejs']);
+  grunt.registerTask('release', ['requirejs', 'imagemin', 'htmlmin']);
 
   /*
       Notes: 
