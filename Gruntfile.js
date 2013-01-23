@@ -72,7 +72,7 @@ module.exports = function (grunt) {
 
     // Run: `grunt watch` from command line for this section to take effect
     watch: {
-      files: '<%= jshint.files %> <%= sass.dev.files %>',
+      files: ['<%= jshint.files %>', '<%= sass.dev.files %>'],
       tasks: 'default'
     },
 
