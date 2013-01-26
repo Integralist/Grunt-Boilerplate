@@ -70,19 +70,14 @@ module.exports = function (grunt) {
       }
     },
 
-    // Run: `grunt watch` from command line for this section to take effect
-    watch: {
-      files: ['<%= jshint.files %>', '<%= sass.dev.files %>'],
-      tasks: 'default'
-    },
-
     requirejs: {
       compile: {
         options: {
           baseUrl: './app',
           mainConfigFile: './app/main.js',
           dir: './app/release/',
-          //optimize: 'none', // comment out this line to use uglify to compress script content
+          fileExclusionRegExp: /^\.|node_modules|Gruntfile|\.md|package.json/,
+          //optimize: 'none',
           modules: [
             {
               name: 'main'
@@ -101,20 +96,19 @@ module.exports = function (grunt) {
         options: {
           style: 'compressed'
         },
-        files: {
-          './app/styles/main.css': './app/styles/sass/main.scss'
-        }
+        src: ['./app/styles/sass/main.scss'],
+        dest: './app/styles/main.css'
       },
       dev: {
         options: {
           style: 'expanded'
         },
-        files: {
-          './app/styles/main.css': './app/styles/sass/main.scss'
-        }
+        src: ['./app/styles/sass/main.scss'],
+        dest: './app/styles/main.css'
       }
     },
 
+    // `optimizationLevel` is only applied to PNG files (not JPG)
     imagemin: {
       dist: {
         options: {
@@ -122,17 +116,7 @@ module.exports = function (grunt) {
           progressive: true
         },
         files: {
-          //'./app/images/': './app/images/**/*.jpg'
-          './app/images/test-min.jpg': './app/images/test.jpg',
-          './app/images/car-min.jpg': './app/images/car.jpg'
-        }
-      },
-      dev: {
-        options: {
-          optimizationLevel: 7
-        },
-        files: {
-          //'./app/images/': './app/images/**/*.jpg'
+          // Destination : Source
           './app/images/test-min.jpg': './app/images/test.jpg',
           './app/images/car-min.jpg': './app/images/car.jpg'
         }
@@ -158,6 +142,12 @@ module.exports = function (grunt) {
           './index-min.html': './index.html'
         }
       }
+    },
+
+    // Run: `grunt watch` from command line for this section to take effect
+    watch: {
+      files: ['<%= jshint.files %>', '<%= sass.dev.src %>'],
+      tasks: 'default'
     }
 
   });
@@ -172,16 +162,20 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
   // Default Task
-  grunt.registerTask('default', ['jshint', 'sass']);
+  grunt.registerTask('default', ['jshint', 'sass:dev']);
 
   // Release Task
-  grunt.registerTask('release', ['requirejs', 'imagemin', 'htmlmin']);
+  grunt.registerTask('release', ['requirejs', 'sass:dist'/*, 'imagemin', 'htmlmin'*/]);
 
   /*
       Notes: 
 
       When registering a new Task we can also pass in any other registered Tasks.
       e.g. grunt.registerTask('release', 'default requirejs'); // when running this task we also run the 'default' Task
+
+      To run specific sub tasks then use a colon, like so...
+      grunt sass:dev
+      grunt sass:dist
    */
 
 };
