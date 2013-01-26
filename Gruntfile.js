@@ -134,11 +134,7 @@ module.exports = function (grunt) {
           collapseBooleanAttributes: true
         },
         files: {
-          './index-min.html': './index.html'
-        }
-      },
-      dev: {
-        files: {
+          // Destination : Source
           './index-min.html': './index.html'
         }
       }
@@ -165,7 +161,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['jshint', 'sass:dev']);
 
   // Release Task
-  grunt.registerTask('release', ['requirejs', 'sass:dist'/*, 'imagemin', 'htmlmin'*/]);
+  grunt.registerTask('release', ['requirejs', 'sass:dist', 'imagemin', 'htmlmin']);
 
   /*
       Notes: 
