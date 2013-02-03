@@ -112,15 +112,45 @@ module.exports = function (grunt) {
     imagemin: {
       dist: {
         options: {
-          optimizationLevel: 7,
+          optimizationLevel: 3,
           progressive: true
         },
-        files: {
-          // Destination : Source
-          './app/images/test-min.jpg': './app/images/test.jpg',
-          './app/images/car-min.jpg': './app/images/car.jpg'
-        }
+        src: ['./app/image/*.png'],
+        dest: ['./app/images/compressed']
       }
+      // dist: {
+      //   options: {
+      //     optimizationLevel: 7,
+      //     progressive: true
+      //   },
+      //   files: [
+      //     {
+      //       src: ['./app/images/*'],
+      //       dest: './app/images/compressed/'
+      //     }
+      //   ]
+      // }
+
+      // dist: {
+      //   options: {
+      //     optimizationLevel: 7,
+      //     progressive: true
+      //   },
+      //   files: [
+      //     {
+      //       expand: true,
+      //       cwd: './app/images/',
+      //       src: ['**/?.png'],
+      //       dest: 'compressed/',
+      //       ext: '.min.png'
+      //     }
+      //   ]
+      // }
+
+      // options: {
+      //   basePath: './'
+      // },
+      // img: 'app/images/**'
     },
 
     htmlmin: {
