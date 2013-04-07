@@ -12,7 +12,10 @@
     "grunt-contrib-requirejs": "~0.3.4",
     "grunt-contrib-sass": "~0.2.1",
     "grunt-contrib-imagemin": "~0.1.0",
-    "grunt-contrib-htmlmin": "~0.1.0"
+    "grunt-contrib-htmlmin": "~0.1.0",
+    "grunt-contrib-jasmine": "~0.4.2",
+    "grunt-template-jasmine-istanbul": "~0.2.1",
+    "grunt-template-jasmine-requirejs": "~0.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
