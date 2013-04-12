@@ -5,7 +5,7 @@
   "main": "Gruntfile.js",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.0rc2",
+    "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.1.4",
     "grunt-contrib-jshint": "https://github.com/gruntjs/grunt-contrib-jshint/archive/7fd70e86c5a8d489095fa81589d95dccb8eb3a46.tar.gz",
     "grunt-contrib-uglify": "~0.1.0",
