@@ -12,5 +12,4 @@ require(['a', 'b', 'c', 'jquery'], function (a, b, c, $) {
     console.log(b);
     console.log(c);
     console.log($);
-    window.xyz = 123;
 });

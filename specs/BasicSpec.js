@@ -4,6 +4,6 @@ describe('Basic', function(){
     })
 
     it('should let me test our AMD modules', function(){
-        expect(window.xyz).toBe(123);
+        expect($).toBeDefined();
     })
 });

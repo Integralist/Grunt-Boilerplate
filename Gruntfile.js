@@ -4,16 +4,15 @@ module.exports = function (grunt) {
         Grunt set-up:
             npm install -g grunt-cli
                 /usr/local/share/npm/bin/grunt -> /usr/local/share/npm/lib/node_modules/grunt-cli/bin/grunt
-            npm install -g grunt-init (seems this isn't necessary if you already have a package.json file created)
-            npm init (same as above: make sure there is an empty package.json file and a README.md file - you'll need to add "grunt": "~0.4.0" to `devDependencies` inside package.json)
+            npm install -g grunt-init
+            npm init (creates a package.json file)
 
         Requirements: the following commands should be run on every project + the `--save-dev` flag updates the package.json file with the dependency name
             npm install grunt --save-dev
-            npm install grunt@VERSION --save-dev
-            npm install grunt@devel --save-dev
+                npm install grunt@VERSION --save-dev
+                npm install grunt@devel --save-dev
             npm install grunt-contrib-watch --save-dev            
             npm install grunt-contrib-jshint --save-dev
-                At time of testing I needed a more up to date version of jshint: npm install https://github.com/gruntjs/grunt-contrib-jshint/archive/7fd70e86c5a8d489095fa81589d95dccb8eb3a46.tar.gz --save-dev
             npm install grunt-contrib-uglify --save-dev
             npm install grunt-contrib-requirejs --save-dev
             npm install grunt-contrib-sass --save-dev
@@ -22,7 +21,7 @@ module.exports = function (grunt) {
             npm install grunt-contrib-jasmine --save-dev
             npm install grunt-template-jasmine-requirejs --save-dev
             npm install grunt-template-jasmine-istanbul --save-dev
-                Seems there is a compatability issue with (at the time) Grunt 0.4.0
+                Seems there is a compatability issue with Grunt:
                 https://github.com/maenu/grunt-template-jasmine-istanbul-example/issues/1
     */
 
@@ -57,7 +56,7 @@ module.exports = function (grunt) {
                 template: require('grunt-template-jasmine-requirejs'),
                 templateOptions: {
                     requireConfig: {
-                        baseUrl: '.app/',
+                        baseUrl: './app/',
                         mainConfigFile: './app/main.js'
                     }
                 }
@@ -194,7 +193,7 @@ module.exports = function (grunt) {
 
         // Run: `grunt watch` from command line for this section to take effect
         watch: {
-            files: ['<%= jshint.files %>', '<%= sass.dev.src %>'],
+            files: ['<%= jshint.files %>', '<%= jasmine.options.specs %>', '<%= sass.dev.src %>'],
             tasks: 'default'
         }
 

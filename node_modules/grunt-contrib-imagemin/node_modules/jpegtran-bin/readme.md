@@ -1,6 +1,6 @@
 # node-jpegtran-bin [![Build Status](https://secure.travis-ci.org/yeoman/node-jpegtran-bin.png?branch=master)](http://travis-ci.org/yeoman/node-jpegtran-bin)
 
-jpegtran 1.2.1 (part of [libjpeg-turbo](http://libjpeg-turbo.virtualgl.org/)) Node.js wrapper that makes it seamlessly available as a local dependency on OS X, Linux and Windows. Most commonly used to losslessly minify JPEG images.
+jpegtran 1.2.90 (part of [libjpeg-turbo](http://libjpeg-turbo.virtualgl.org/)) Node.js wrapper that makes it seamlessly available as a local dependency on OS X, Linux and Windows. Most commonly used to losslessly minify JPEG images.
 
 > libjpeg-turbo is a derivative of libjpeg that uses SIMD instructions (MMX, SSE2, NEON) to accelerate baseline JPEG compression and decompression on x86, x86-64, and ARM systems. On such systems, libjpeg-turbo is generally 2-4x as fast as the unmodified version of libjpeg, all else being equal.
 
@@ -23,23 +23,15 @@ You can also run directly from `./node_modules/.bin/jpegtran-bin`
 
 Note to self on how to update the binaries.
 
-### OS X
+### OS X and Linux
 
-- [Download source](http://sourceforge.net/projects/libjpeg-turbo/files/)
-- Extract and `cd` into that folder
-- Run `./configure --disable-shared --host i686-apple-darwin CFLAGS='-O3 -m32' LDFLAGS=-m32 && make`
-
-### Linux
-
-- [Download source](http://sourceforge.net/projects/libjpeg-turbo/files/)
-- Extract and `cd` into that folder
-- Run `./configure --disable-shared --host i686-pc-linux-gnu CFLAGS='-O3 -m32' LDFLAGS=-m32 && make`
+Run `npm install` to build the binary.
 
 ### Windows
 
-- Download the [Windows files 32/64-bit](http://sourceforge.net/projects/libjpeg-turbo/files/) on a Windows machine
+- Download the [Windows files 32/64-bit](http://sourceforge.net/projects/libjpeg-turbo/files/) (GCC compiled) on a Windows machine
 - Run the downloaded file to extract
-- Go to the `bin` folder at the destination and copy jpegtran.exe
+- Go to the `bin` folder at the destination and copy `jpegtran.exe` and `libjpeg-62.dll`
 
 
 ## License
