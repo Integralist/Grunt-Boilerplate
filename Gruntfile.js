@@ -123,55 +123,60 @@ module.exports = function (grunt) {
         sass: {
             dist: {
                 options: {
-                    style: 'compressed'
+                    style: 'compressed',
+                    require: ['./assets/styles/sass/helpers/url64.rb']
                 },
-                src: ['./app/styles/sass/main.scss'],
-                dest: './app/styles/main.css'
+                expand: true,
+                cwd: './app/styles/sass/',
+                src: ['*.scss'],
+                dest: './app/styles/',
+                ext: '.css'
             },
             dev: {
                 options: {
-                    style: 'expanded'
+                    style: 'expanded',
+                    debugInfo: true,
+                    lineNumbers: true,
+                    require: ['./app/styles/sass/helpers/url64.rb']
                 },
-                src: ['./app/styles/sass/main.scss'],
-                dest: './app/styles/main.css'
+                expand: true,
+                cwd: './app/styles/sass/',
+                src: ['*.scss'],
+                dest: './app/styles/',
+                ext: '.css'
             }
         },
 
         // `optimizationLevel` is only applied to PNG files (not JPG)
         imagemin: {
-            dist: {
+            png: {
                 options: {
-                    optimizationLevel: 7,
+                    optimizationLevel: 7
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: './app/images/',
+                        src: ['**/*.png'],
+                        dest: './app/images/compressed/',
+                        ext: '.png'
+                    }
+                ]
+            },
+            jpg: {
+                options: {
                     progressive: true
                 },
                 files: [
                     {
                         expand: true,
                         cwd: './app/images/',
-                        src: ['**/?.png'],
-                        dest: 'compressed/',
-                        ext: '.min.png'
+                        src: ['**/*.jpg'],
+                        dest: './app/images/compressed/',
+                        ext: '.jpg'
                     }
                 ]
             }
-
-            // dist: {
-            //     options: {
-            //         optimizationLevel: 7,
-            //         progressive: true
-            //     },
-            //     files: [
-            //         {
-            //             src: ['./app/images/*'],
-            //             dest: './app/images/compressed/'
-            //         }
-            //     ]
-            // }
-
-            // options: {
-            //     basePath: './'
-            // },
-            // img: 'app/images/**'
         },
 
         htmlmin: {
