@@ -52,21 +52,20 @@ module.exports = function (grunt) {
             src: ['app/**/*.js', '!app/release/**'],
             options: {
                 specs: 'specs/**/*Spec.js',
-                helpers: 'specs/helpers/*Helper.js',
+                helpers: ['specs/helpers/*Helper.js', 'specs/helpers/sinon.js'],
                 template: require('grunt-template-jasmine-requirejs'),
                 templateOptions: {
                     requireConfig: {
                         baseUrl: './app/',
                         mainConfigFile: './app/main.js'
                     }
+                    /*,
+                    template: require('grunt-template-jasmine-istanbul'),
+                    templateOptions: {
+                        coverage: './reports/coverage.json',
+                        report: './reports/coverage'
+                    }*/
                 }
-                /*
-                template: require('grunt-template-jasmine-istanbul'),
-                templateOptions: {
-                    coverage: 'reports/coverage.json',
-                    report: 'reports/coverage'
-                }
-                */
             }
         },
 
@@ -76,27 +75,41 @@ module.exports = function (grunt) {
                 In case there is a /release/ directory found, we don't want to lint that 
                 so we use the ! (bang) operator to ignore the specified directory
             */
-            files: ['Gruntfile.js', 'app/**/*.js', '!app/release/**', 'modules/**/*.js'],
+            files: ['Gruntfile.js', 'app/**/*.js', '!app/release/**', 'modules/**/*.js', 'specs/**/*Spec.js'],
             options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
+                curly:   true,
+                eqeqeq:  true,
+                immed:   true,
                 latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                boss: true,
-                eqnull: true,
+                newcap:  true,
+                noarg:   true,
+                sub:     true,
+                undef:   true,
+                boss:    true,
+                eqnull:  true,
                 browser: true,
 
                 globals: {
-                    module: true,
-                    require: true,
-                    requirejs: true,
-                    jQuery: true,
-                    console: true,
-                    define: true
+                    // AMD
+                    module:     true,
+                    require:    true,
+                    requirejs:  true,
+                    define:     true,
+
+                    // Environments
+                    console:    true,
+
+                    // General Purpose Libraroes
+                    $:          true,
+                    jQuery:     true,
+
+                    // Testing
+                    sinon:      true,
+                    describe:   true,
+                    it:         true,
+                    expect:     true,
+                    beforeEach: true,
+                    afterEach:  true
                 }
             }
         },
