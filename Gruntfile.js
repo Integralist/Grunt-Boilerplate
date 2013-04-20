@@ -109,7 +109,7 @@ module.exports = function (grunt) {
                     // Environments
                     console:    true,
 
-                    // General Purpose Libraroes
+                    // General Purpose Libraries
                     $:          true,
                     jQuery:     true,
 
