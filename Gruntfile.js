@@ -1,16 +1,15 @@
 module.exports = function (grunt) {
 
     /*
-        Grunt set-up:
+        Grunt installation:
+        -------------------
             npm install -g grunt-cli
-                /usr/local/share/npm/bin/grunt -> /usr/local/share/npm/lib/node_modules/grunt-cli/bin/grunt
             npm install -g grunt-init
-            npm init (creates a package.json file)
+            npm init (creates a `package.json` file)
 
-        Requirements: the following commands should be run on every project + the `--save-dev` flag updates the package.json file with the dependency name
+        Project Dependencies:
+        ---------------------
             npm install grunt --save-dev
-                npm install grunt@VERSION --save-dev
-                npm install grunt@devel --save-dev
             npm install grunt-contrib-watch --save-dev            
             npm install grunt-contrib-jshint --save-dev
             npm install grunt-contrib-uglify --save-dev
@@ -59,13 +58,24 @@ module.exports = function (grunt) {
                         baseUrl: './app/',
                         mainConfigFile: './app/main.js'
                     }
-                    /*,
+                }
+                /*
                     template: require('grunt-template-jasmine-istanbul'),
                     templateOptions: {
                         coverage: './reports/coverage.json',
-                        report: './reports/coverage'
-                    }*/
-                }
+                        report: './reports/coverage',
+
+                        template: require('grunt-template-jasmine-requirejs'),
+                        templateOptions: {
+                            requireConfig: {
+                                // baseUrl: './app/',
+                                // mainConfigFile: './app/main.js'
+                                baseUrl: '.grunt/grunt-contrib-jasmine/app',
+                                mainConfigFile: '.grunt/grunt-contrib-jasmine/app/main.js'
+                            }
+                        }
+                    }
+                */
             }
         },
 
