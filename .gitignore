@@ -5,3 +5,4 @@ app/images
 # They'll get recreated automatically by a user when they run Grunt via the CLI
 _SpecRunner.html
 .grunt/grunt-contrib-jasmine
+node_modules

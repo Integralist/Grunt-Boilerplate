@@ -10,13 +10,14 @@ module.exports = function (grunt) {
         Project Dependencies:
         ---------------------
             npm install grunt --save-dev
-            npm install grunt-contrib-watch --save-dev            
+            npm install grunt-contrib-watch --save-dev
             npm install grunt-contrib-jshint --save-dev
             npm install grunt-contrib-uglify --save-dev
             npm install grunt-contrib-requirejs --save-dev
             npm install grunt-contrib-sass --save-dev
             npm install grunt-contrib-imagemin --save-dev
             npm install grunt-contrib-htmlmin --save-dev
+            npm install grunt-contrib-connect --save-dev
             npm install grunt-contrib-jasmine --save-dev
             npm install grunt-template-jasmine-requirejs --save-dev
             npm install grunt-template-jasmine-istanbul --save-dev
@@ -42,6 +43,13 @@ module.exports = function (grunt) {
         },
         */
 
+        // Used to connect to a locally running web server (so Jasmine can test against a DOM)
+        connect: {
+            test: {
+                port: 8000
+            }
+        },
+
         jasmine: {
             /*
                 Note:
@@ -50,6 +58,7 @@ module.exports = function (grunt) {
             */
             src: ['app/**/*.js', '!app/release/**'],
             options: {
+                host: 'http://127.0.0.1:8000/',
                 specs: 'specs/**/*Spec.js',
                 helpers: ['specs/helpers/*Helper.js', 'specs/helpers/sinon.js'],
                 template: require('grunt-template-jasmine-requirejs'),
@@ -235,10 +244,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // Default Task
-    grunt.registerTask('default', ['jshint', 'jasmine', 'sass:dev']);
+    grunt.registerTask('default', ['jshint', 'connect', 'jasmine', 'sass:dev']);
+
+    // Unit Testing Task
+    grunt.registerTask('test', ['connect', 'jasmine']);
 
     // Release Task
     grunt.registerTask('release', ['jshint', 'jasmine', 'requirejs', 'sass:dist', 'imagemin', 'htmlmin']);
