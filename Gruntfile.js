@@ -23,6 +23,10 @@ module.exports = function (grunt) {
             npm install grunt-template-jasmine-istanbul --save-dev
                 Seems there is a compatability issue with Grunt:
                 https://github.com/maenu/grunt-template-jasmine-istanbul-example/issues/1
+
+        Simple Dependency Install:
+        --------------------------
+            npm install (from the same root directory as the `package.json` file)
     */
 
     // Project configuration.
