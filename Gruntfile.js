@@ -160,7 +160,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     style: 'compressed',
-                    require: ['./assets/styles/sass/helpers/url64.rb']
+                    require: ['./app/styles/sass/helpers/url64.rb']
                 },
                 expand: true,
                 cwd: './app/styles/sass/',
