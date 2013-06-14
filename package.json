@@ -1,21 +1,21 @@
 {
-  "name": "Integralist",
+  "name": "Grunt Boilerplate",
   "version": "0.1.0",
   "description": "This is a project set-up using Grunt to take case of some standard tasks such as: compiling AMD based modules using RequireJS, watching/compiling Sass into CSS, watching/linting JS code and some other things such as running unit tests",
   "main": "Gruntfile.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-watch": "~0.3.1",
-    "grunt-contrib-jshint": "~0.4.3",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-sass": "~0.3.0",
     "grunt-contrib-imagemin": "~0.1.4",
     "grunt-contrib-htmlmin": "~0.1.3",
     "grunt-contrib-jasmine": "~0.4.2",
-    "grunt-template-jasmine-istanbul": "~0.2.1",
-    "grunt-template-jasmine-requirejs": "~0.1.1",
+    "grunt-template-jasmine-istanbul": "~0.2.4",
+    "grunt-template-jasmine-requirejs": "~0.1.2",
     "grunt-contrib-connect": "~0.3.0"
   },
   "scripts": {
