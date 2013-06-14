@@ -21,8 +21,6 @@ module.exports = function (grunt) {
             npm install grunt-contrib-jasmine --save-dev
             npm install grunt-template-jasmine-requirejs --save-dev
             npm install grunt-template-jasmine-istanbul --save-dev
-                Seems there is a compatability issue with Grunt:
-                https://github.com/maenu/grunt-template-jasmine-istanbul-example/issues/1
 
         Simple Dependency Install:
         --------------------------
@@ -55,40 +53,85 @@ module.exports = function (grunt) {
         },
 
         jasmine: {
-            /*
-                Note:
-                In case there is a /release/ directory found, we don't want to run tests on that 
-                so we use the ! (bang) operator to ignore the specified directory
-            */
-            src: ['app/**/*.js', '!app/release/**'],
-            options: {
-                host: 'http://127.0.0.1:8000/',
-                specs: 'specs/**/*Spec.js',
-                helpers: ['specs/helpers/*Helper.js', 'specs/helpers/sinon.js'],
-                template: require('grunt-template-jasmine-requirejs'),
-                templateOptions: {
-                    requireConfig: {
-                        baseUrl: './app/',
-                        mainConfigFile: './app/main.js'
+            run: {
+                /*
+                    Note:
+                    In case there is a /release/ directory found, we don't want to run tests on that 
+                    so we use the ! (bang) operator to ignore the specified directory
+                */
+                src: ['app/**/*.js', '!app/release/**'],
+                options: {
+                    host: 'http://127.0.0.1:8000/',
+                    specs: 'specs/**/*Spec.js',
+                    helpers: ['specs/helpers/*Helper.js', 'specs/helpers/sinon.js'],
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: './app/',
+                            mainConfigFile: './app/main.js'
+                        }
                     }
                 }
-                /*
+            },
+            coverage: {
+                src: ['app/**/*.js', '!app/release/**'],
+                options: {
+                    specs: 'specs/**/*Spec.js',
                     template: require('grunt-template-jasmine-istanbul'),
                     templateOptions: {
-                        coverage: './reports/coverage.json',
-                        report: './reports/coverage',
-
+                        coverage: 'bin/coverage/coverage.json',
+                        report: [
+                            {
+                                type: 'html',
+                                options: {
+                                    dir: 'bin/coverage//html'
+                                }
+                            },
+                            {
+                                type: 'text-summary'
+                            }
+                        ],
+                        // 1. don't replace src for the mixed-in template with instrumented sources
+                        replace: false,
                         template: require('grunt-template-jasmine-requirejs'),
                         templateOptions: {
                             requireConfig: {
-                                // baseUrl: './app/',
-                                // mainConfigFile: './app/main.js'
-                                baseUrl: '.grunt/grunt-contrib-jasmine/app',
-                                mainConfigFile: '.grunt/grunt-contrib-jasmine/app/main.js'
+                                // 2. use the baseUrl you want
+                                baseUrl: './app/',
+                                // 3. pass paths of the sources being instrumented as a configuration option
+                                //    these paths should be the same as the jasmine task's src
+                                //    unfortunately, grunt.config.get() doesn't work because the config is just being evaluated
+                                config: {
+                                    instrumented: {
+                                        src: grunt.file.expand('./app/*.js')
+                                    }
+                                },
+                                // 4. use this callback to read the paths of the sources being instrumented and redirect requests to them appropriately
+                                callback: function () {
+                                    define('instrumented', ['module'], function (module) {
+                                        return module.config().src;
+                                    });
+                                    require(['instrumented'], function (instrumented) {
+                                        var oldLoad = requirejs.load;
+                                        requirejs.load = function (context, moduleName, url) {
+                                            // normalize paths
+                                            if (url.substring(0, 1) == '/') {
+                                                url = url.substring(1);
+                                            } else if (url.substring(0, 2) == './') {
+                                                url = url.substring(2);
+                                            }
+                                            // redirect
+                                            if (instrumented.indexOf(url) > -1) {
+                                                url = './.grunt/grunt-contrib-jasmine/' + url;
+                                            }
+                                            return oldLoad.apply(this, [context, moduleName, url]);
+                                        };
+                                    });
+                                }
                             }
                         }
                     }
-                */
+                }
             }
         },
 
@@ -255,7 +298,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['jshint', 'connect', 'jasmine', 'sass:dev']);
 
     // Unit Testing Task
-    grunt.registerTask('test', ['connect', 'jasmine']);
+    grunt.registerTask('test', ['connect', 'jasmine:run']);
 
     // Release Task
     grunt.registerTask('release', ['jshint', 'jasmine', 'requirejs', 'sass:dist', 'imagemin', 'htmlmin']);
