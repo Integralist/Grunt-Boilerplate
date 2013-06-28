@@ -25,6 +25,10 @@ module.exports = function (grunt) {
         Simple Dependency Install:
         --------------------------
             npm install (from the same root directory as the `package.json` file)
+
+        Gem Dependencies:
+        -----------------
+            gem install image_optim
     */
 
     // Project configuration.
