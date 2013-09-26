@@ -21,6 +21,8 @@ module.exports = function (grunt) {
             npm install grunt-contrib-jasmine --save-dev
             npm install grunt-template-jasmine-requirejs --save-dev
             npm install grunt-template-jasmine-istanbul --save-dev
+            npm install load-grunt-tasks --save-dev
+            npm install time-grunt --save-dev
 
         Simple Dependency Install:
         --------------------------
@@ -30,6 +32,12 @@ module.exports = function (grunt) {
         -----------------
             gem install image_optim
     */
+
+    // Displays the elapsed execution time of grunt tasks
+    require('time-grunt')(grunt);
+
+    // Load NPM Tasks
+    require('load-grunt-tasks')(grunt, ['grunt-*', '!grunt-template-jasmine-istanbul', '!grunt-template-jasmine-requirejs']);
 
     // Project configuration.
     grunt.initConfig({
@@ -60,7 +68,7 @@ module.exports = function (grunt) {
             run: {
                 /*
                     Note:
-                    In case there is a /release/ directory found, we don't want to run tests on that 
+                    In case there is a /release/ directory found, we don't want to run tests on that
                     so we use the ! (bang) operator to ignore the specified directory
                 */
                 src: ['app/**/*.js', '!app/release/**'],
@@ -119,9 +127,9 @@ module.exports = function (grunt) {
                                         var oldLoad = requirejs.load;
                                         requirejs.load = function (context, moduleName, url) {
                                             // normalize paths
-                                            if (url.substring(0, 1) == '/') {
+                                            if (url.substring(0, 1) === '/') {
                                                 url = url.substring(1);
-                                            } else if (url.substring(0, 2) == './') {
+                                            } else if (url.substring(0, 2) === './') {
                                                 url = url.substring(2);
                                             }
                                             // redirect
@@ -142,7 +150,7 @@ module.exports = function (grunt) {
         jshint: {
             /*
                 Note:
-                In case there is a /release/ directory found, we don't want to lint that 
+                In case there is a /release/ directory found, we don't want to lint that
                 so we use the ! (bang) operator to ignore the specified directory
             */
             files: ['Gruntfile.js', 'app/**/*.js', '!app/release/**', 'modules/**/*.js', 'specs/**/*Spec.js'],
@@ -287,17 +295,6 @@ module.exports = function (grunt) {
 
     });
 
-    // Load NPM Tasks
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-
     // Default Task
     grunt.registerTask('default', ['jshint', 'connect', 'jasmine', 'sass:dev']);
 
@@ -305,10 +302,10 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['connect', 'jasmine:run']);
 
     // Release Task
-    grunt.registerTask('release', ['jshint', 'jasmine', 'requirejs', 'sass:dist', 'imagemin', 'htmlmin']);
+    grunt.registerTask('release', ['jshint', 'test', 'requirejs', 'sass:dist', 'imagemin', 'htmlmin']);
 
     /*
-        Notes: 
+        Notes:
 
         When registering a new Task we can also pass in any other registered Tasks.
         e.g. grunt.registerTask('release', 'default requirejs'); // when running this task we also run the 'default' Task
