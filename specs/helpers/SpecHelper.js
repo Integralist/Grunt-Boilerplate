@@ -1,19 +1,37 @@
 beforeEach(function(){
-    this.addMatchers({
-        toBeArray: function (expected) {
-            return Object.prototype.toString.call(this.actual) === '[object Array]' ? true : false;
+    jasmine.addMatchers({
+        toBeArray: function(){
+            return {
+                compare: function(actual, expected){
+                    return {
+                        pass: Object.prototype.toString.call(actual) === '[object Array]' ? true : false
+                    };
+                }
+            };
         }
     });
 
-    this.addMatchers({
-        toBeNumber: function (expected) {
-            return /\d+/.test(this.actual);
+    jasmine.addMatchers({
+        toBeNumber: function(){
+            return {
+                compare: function(actual, expected){
+                    return {
+                        pass: (/\d+/).test(actual)
+                    };
+                }
+            };
         }
     });
 
-    this.addMatchers({
+    jasmine.addMatchers({
         toBeNaN: function (expected) {
-            return isNaN(this.actual);
+            return {
+                compare: function(actual, expected){
+                    return {
+                        pass: isNaN(actual)
+                    };
+                }
+            };
         }
     });
 });
