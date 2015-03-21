@@ -8,8 +8,8 @@ This is a project set-up using Grunt to take care of some standard tasks such as
 
 ## Help using Grunt
 
-- [Grunt Boilerplate](http://integralist.co.uk/Grunt-Boilerplate.html)
-- [Using Grunts Config API](http://integralist.co.uk/Using-Grunts-Config-API.html)
+- [Grunt Boilerplate](http://www.integralist.co.uk/posts/grunt-boilerplate.html)
+- [Using Grunts Config API](http://www.integralist.co.uk/posts/grunt-config.html)
 
 ## TODO:
 
